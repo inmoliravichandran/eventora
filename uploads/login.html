@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventora | Sign In - Plan Your Perfect Event</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-dark: #0f172a;
+            --primary-light: #1e293b;
+            --accent-gold: #fbbf24;
+            --accent-amber: #f59e0b;
+            --accent-purple: #8b5cf6;
+            --accent-pink: #ec4899;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --border-light: #e2e8f0;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            --shadow-gold: 0 0 20px rgba(251,191,36,0.3);
+            --border-radius: 20px;
+            --border-radius-sm: 12px;
+            --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            --transition-smooth: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .global-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-md);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-amber));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition-bounce);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-gold);
+            transform: translateY(-2px);
+        }
+
+        /* Auth Container */
+        .auth-container {
+            min-height: calc(100vh - 200px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-container::before {
+            content: '';
+            position: absolute;
+            width: 2000px;
+            height: 2000px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.05) 100%);
+            top: -1000px;
+            right: -500px;
+            transform: rotate(45deg);
+            animation: floatBlob 20s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        .auth-container::after {
+            content: '';
+            position: absolute;
+            width: 1500px;
+            height: 1500px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.02) 100%);
+            bottom: -800px;
+            left: -300px;
+            transform: rotate(-30deg);
+            animation: floatBlob 25s ease-in-out infinite reverse;
+            z-index: 1;
+        }
+
+        @keyframes floatBlob {
+            0%, 100% {
+                transform: rotate(45deg) translate(0, 0);
+            }
+            50% {
+                transform: rotate(55deg) translate(50px, -50px);
+            }
+        }
+
+        /* Auth Card */
+        .auth-card {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            width: 100%;
+            max-width: 1100px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            overflow: hidden;
+            position: relative;
+            z-index: 2;
+            animation: cardReveal 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        @keyframes cardReveal {
+            0% {
+                opacity: 0;
+                transform: scale(0.8) translateY(50px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        /* Left Panel - Branding */
+        .auth-brand {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 3rem 2rem;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-brand::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            top: -100px;
+            right: -100px;
+            animation: pulseGlow 4s ease-in-out infinite;
+        }
+
+        .auth-brand::after {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            bottom: -50px;
+            left: -50px;
+            animation: pulseGlow 4s ease-in-out infinite reverse;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+        }
+
+        .brand-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .brand-logo {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            animation: slideInLeft 0.8s ease-out;
+        }
+
+        .brand-logo i {
+            font-size: 3rem;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .brand-tagline {
+            font-size: 2rem;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 1.5rem;
+            animation: slideInLeft 0.8s ease-out 0.1s both;
+        }
+
+        .brand-description {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            animation: slideInLeft 0.8s ease-out 0.2s both;
+        }
+
+        .brand-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .brand-features li {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            animation: slideInLeft 0.5s ease-out forwards;
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+
+        .brand-features li:nth-child(1) { animation-delay: 0.3s; }
+        .brand-features li:nth-child(2) { animation-delay: 0.4s; }
+        .brand-features li:nth-child(3) { animation-delay: 0.5s; }
+        .brand-features li:nth-child(4) { animation-delay: 0.6s; }
+
+        @keyframes slideInLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .brand-features i {
+            color: #ffd600;
+            font-size: 1.3rem;
+            width: 24px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .testimonial {
+            background: rgba(255,255,255,0.1);
+            padding: 1.5rem;
+            border-radius: 12px;
+            backdrop-filter: blur(5px);
+            position: relative;
+            z-index: 2;
+            animation: slideInUp 0.8s ease-out 0.7s both;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: var(--transition-bounce);
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .testimonial:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.15);
+            border-color: var(--accent-gold);
+        }
+
+        .testimonial p {
+            font-style: italic;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .testimonial-author img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--accent-gold);
+        }
+
+        .testimonial-author div {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .testimonial-author strong {
+            font-size: 0.95rem;
+        }
+
+        .testimonial-author span {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        /* Right Panel - Login Form */
+        .auth-form-container {
+            padding: 3rem 2.5rem;
+            background: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-form-container::before {
+            content: '✨';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(251,191,36,0.05) 0%, transparent 70%);
+            animation: rotate 30s linear infinite;
+            pointer-events: none;
+            font-size: 10rem;
+            opacity: 0.3;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .form-header h2 {
+            font-size: 2.2rem;
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-header p {
+            color: var(--text-muted);
+            animation: fadeInUp 0.8s ease-out 0.1s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .register-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition-bounce);
+            display: inline-block;
+        }
+
+        .register-link:hover {
+            transform: scale(1.05);
+            color: #764ba2;
+        }
+
+        /* Input Groups */
+        .input-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+            animation: fadeInUp 0.5s ease-out backwards;
+        }
+
+        .input-group:nth-child(1) { animation-delay: 0.2s; }
+        .input-group:nth-child(2) { animation-delay: 0.3s; }
+
+        .input-group i.input-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 1.1rem;
+            z-index: 1;
+            transition: var(--transition-smooth);
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 0.9rem 1rem 0.9rem 2.8rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+            transform: scale(1.02);
+        }
+
+        .input-group input:focus + i.input-icon {
+            color: #667eea;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .input-group input::placeholder {
+            color: #94a3b8;
+            transition: opacity 0.3s ease;
+        }
+
+        .input-group input:focus::placeholder {
+            opacity: 0.5;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            cursor: pointer;
+            font-size: 1.1rem;
+            z-index: 1;
+            transition: var(--transition-bounce);
+        }
+
+        .password-toggle:hover {
+            color: #667eea;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        /* Form Options */
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.5s ease-out 0.4s both;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .remember-me:hover {
+            color: var(--primary-dark);
+        }
+
+        .remember-me input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            accent-color: #667eea;
+            transition: var(--transition-bounce);
+        }
+
+        .remember-me input[type="checkbox"]:hover {
+            transform: scale(1.1);
+        }
+
+        .forgot-link {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: var(--transition-smooth);
+            position: relative;
+        }
+
+        .forgot-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: #667eea;
+            transition: width 0.3s ease;
+        }
+
+        .forgot-link:hover::after {
+            width: 100%;
+        }
+
+        /* Login Button */
+        .btn-auth {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            margin: 1rem 0;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.5s ease-out 0.5s both;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-auth::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-auth:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-auth:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 20px -5px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-auth:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .btn-auth i {
+            transition: transform 0.3s ease;
+        }
+
+        .btn-auth:hover i {
+            transform: translateX(5px);
+        }
+
+        .btn-auth.loading {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .btn-auth.loading i {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Demo Credentials Box */
+        .demo-box {
+            background: linear-gradient(135deg, #fef3c7, #fed7aa);
+            padding: 1rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+            text-align: center;
+            animation: fadeInUp 0.5s ease-out 0.55s both;
+            border: 1px solid var(--accent-gold);
+            cursor: pointer;
+            transition: var(--transition-bounce);
+        }
+
+        .demo-box:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-gold);
+        }
+
+        .demo-box p {
+            color: var(--primary-dark);
+            font-size: 0.85rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .demo-box p:first-child {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .demo-box strong {
+            color: #667eea;
+        }
+
+        /* Social Login */
+        .social-login {
+            text-align: center;
+            margin: 1.5rem 0;
+            animation: fadeInUp 0.5s ease-out 0.6s both;
+        }
+
+        .social-login p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .social-login p::before,
+        .social-login p::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 30%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border-light), transparent);
+        }
+
+        .social-login p::before {
+            left: 0;
+        }
+
+        .social-login p::after {
+            right: 0;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .social-icon {
+            width: 45px;
+            height: 45px;
+            border: 2px solid var(--border-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            background: white;
+        }
+
+        .social-icon::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(102, 126, 234, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s;
+        }
+
+        .social-icon:hover::before {
+            width: 100px;
+            height: 100px;
+        }
+
+        .social-icon:hover {
+            border-color: #667eea;
+            color: #667eea;
+            transform: translateY(-5px) rotate(360deg);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Sign Up Link */
+        .existing-account {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px dashed var(--border-light);
+            animation: fadeInUp 0.5s ease-out 0.7s both;
+        }
+
+        .existing-account p {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .btn-register {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: linear-gradient(135deg, #fef3c7, #fed7aa);
+            color: var(--primary-dark);
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 40px;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            border: 1px solid var(--accent-gold);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-register::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(251,191,36,0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-register:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-register:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 20px -5px rgba(251,191,36,0.4);
+        }
+
+        .btn-register i {
+            margin-right: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-register:hover i {
+            transform: rotate(360deg);
+        }
+
+        /* Footer */
+        .global-footer {
+            background: var(--primary-dark);
+            color: white;
+            padding: 3rem 5% 1rem;
+            margin-top: 0;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo-foot {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-amber));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .footer-col p {
+            margin-bottom: 0.5rem;
+            color: #cbd5e1;
+        }
+
+        .footer-col a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: var(--transition-smooth);
+        }
+
+        .footer-col a:hover {
+            color: var(--accent-gold);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-icons i {
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition-bounce);
+        }
+
+        .social-icons i:hover {
+            color: var(--accent-gold);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        /* Message Container */
+        #message {
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .auth-card {
+                grid-template-columns: 1fr;
+            }
+            
+            .auth-brand {
+                display: none;
+            }
+            
+            .auth-form-container {
+                padding: 2rem 1.5rem;
+            }
+            
+            .form-header h2 {
+                font-size: 1.8rem;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .social-icons {
+                justify-content: center;
+            }
+            
+            .nav-links {
+                gap: 0.8rem;
+                font-size: 0.85rem;
+            }
+            
+            .global-header {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="global-header">
+        <div class="logo">Eventora</div>
+        <nav class="nav-links">
+            <a href="index.html"><i class="fas fa-home"></i> Home</a>
+            <a href="services.html"><i class="fas fa-calendar-alt"></i> Services</a>
+            <a href="about.html"><i class="fas fa-compass"></i> How it works</a>
+            <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="auth-container">
+            <div class="auth-card">
+                <!-- Left Panel - Branding -->
+                <div class="auth-brand">
+                    <div class="brand-content">
+                        <div class="brand-logo">
+                            <i class="fas fa-calendar-check"></i>
+                            <span>Eventora</span>
+                        </div>
+                        <h2 class="brand-tagline">Welcome Back to Your Event Journey</h2>
+                        <p class="brand-description">
+                            Continue planning your perfect event with thousands of trusted vendors and seamless booking experience.
+                        </p>
+                        <ul class="brand-features">
+                            <li><i class="fas fa-check-circle"></i> 1,234+ events planned successfully</li>
+                            <li><i class="fas fa-check-circle"></i> 50+ trusted vendor partners</li>
+                            <li><i class="fas fa-check-circle"></i> 24/7 customer support</li>
+                            <li><i class="fas fa-check-circle"></i> 100% secure payments</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="testimonial">
+                        <p>"Eventora made our wedding planning so easy! The platform is intuitive and the support team was amazing. Highly recommended!"</p>
+                        <div class="testimonial-author">
+                            <img src="https://images.unsplash.com/photo-1494790108777-467efef809c1?w=100" alt="Sarah">
+                            <div>
+                                <strong>Sarah & Michael</strong>
+                                <span>Wedding, March 2026</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Panel - Login Form -->
+                <div class="auth-form-container">
+                    <div class="form-header">
+                        <h2>Sign In</h2>
+                        <p>Welcome back! Please enter your details</p>
+                        <p style="margin-top: 0.5rem; font-size: 0.9rem;">
+                            New to Eventora? 
+                            <a href="register.html" class="register-link">
+                                Create an account <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </p>
+                    </div>
+
+                    <!-- Login Form -->
+                    <form id="loginForm" onsubmit="handleLogin(event)">
+                        <div class="input-group">
+                            <i class="fas fa-envelope input-icon"></i>
+                            <input type="email" id="email" name="email" placeholder="Enter your email address" required autocomplete="email">
+                        </div>
+
+                        <div class="input-group">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input type="password" id="password" name="password" placeholder="Enter your password" required autocomplete="current-password">
+                            <i class="fas fa-eye password-toggle" onclick="togglePassword('password')"></i>
+                        </div>
+
+                        <div class="form-options">
+                            <label class="remember-me">
+                                <input type="checkbox" id="rememberMe"> 
+                                <span>Remember me for 30 days</span>
+                            </label>
+                            <a href="#" class="forgot-link" onclick="forgotPassword(event)">Forgot password?</a>
+                        </div>
+
+                        <button type="submit" class="btn-auth" id="loginBtn">
+                            <i class="fas fa-sign-in-alt"></i> Sign In to Your Account
+                        </button>
+
+                        <!-- Demo Credentials -->
+                        <div class="demo-box" onclick="fillDemoCredentials()">
+                            <p><i class="fas fa-laptop-code"></i> Demo Credentials</p>
+                            <p><strong>📧 Email:</strong> demo@eventora.com &nbsp;|&nbsp; <strong>🔒 Password:</strong> demo123</p>
+                            <p style="font-size: 0.75rem; margin-top: 0.3rem;">Click to auto-fill</p>
+                        </div>
+
+                        <div class="social-login">
+                            <p>Or continue with</p>
+                            <div class="social-icons">
+                                <div class="social-icon" onclick="handleSocialLogin('google')">
+                                    <i class="fab fa-google"></i>
+                                </div>
+                                <div class="social-icon" onclick="handleSocialLogin('facebook')">
+                                    <i class="fab fa-facebook-f"></i>
+                                </div>
+                                <div class="social-icon" onclick="handleSocialLogin('apple')">
+                                    <i class="fab fa-apple"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div id="message"></div>
+
+                    <!-- Register Link -->
+                    <div class="existing-account">
+                        <p>Don't have an account yet?</p>
+                        <a href="register.html" class="btn-register">
+                            <i class="fas fa-user-plus"></i> Create Free Account
+                        </a>
+                        <p style="margin-top: 1rem; font-size: 0.8rem;">
+                            By signing in, you agree to our 
+                            <a href="terms.html" style="color: #667eea;">Terms</a> and 
+                            <a href="privacy.html" style="color: #667eea;">Privacy Policy</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="global-footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="logo-foot">Eventora</div>
+                <p>Your all-in-one event e‑commerce platform.</p>
+                <div class="social-icons">
+                    <i class="fab fa-facebook"></i>
+                    <i class="fab fa-instagram"></i>
+                    <i class="fab fa-linkedin"></i>
+                </div>
+            </div>
+            <div class="footer-col">
+                <p><strong>Explore</strong></p>
+                <p><a href="services.html">Services</a></p>
+                <p><a href="about.html">How it works</a></p>
+                <p><a href="privacy.html">Privacy Policy</a></p>
+            </div>
+            <div class="footer-col">
+                <p><strong>Support</strong></p>
+                <p><a href="contact.html">Contact</a></p>
+                <p>+94 77 123 4567</p>
+                <p>support@eventora.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 Eventora · All rights reserved · Colombo, Sri Lanka</p>
+        </div>
+    </footer>
+
+    <script>
+        // ============================================
+        // NOTIFICATION SYSTEM
+        // ============================================
+        
+        function showNotification(message, type = 'success') {
+            // Remove existing notification
+            const existingToast = document.querySelector('.custom-toast');
+            if (existingToast) existingToast.remove();
+            
+            // Create toast element
+            const toast = document.createElement('div');
+            toast.className = 'custom-toast';
+            
+            let icon = '✓';
+            let bgColor = '#10b981';
+            
+            if (type === 'error') {
+                icon = '✗';
+                bgColor = '#ef4444';
+            } else if (type === 'info') {
+                icon = 'ℹ';
+                bgColor = '#3b82f6';
+            } else if (type === 'warning') {
+                icon = '⚠';
+                bgColor = '#f59e0b';
+            }
+            
+            toast.innerHTML = `
+                <div style="
+                    position: fixed;
+                    top: 90px;
+                    right: 20px;
+                    background: ${bgColor};
+                    color: white;
+                    padding: 1rem 1.5rem;
+                    border-radius: 12px;
+                    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+                    z-index: 10000;
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                    font-size: 0.95rem;
+                    font-weight: 500;
+                    max-width: 350px;
+                    animation: slideInRight 0.3s ease;
+                ">
+                    <div style="
+                        width: 24px;
+                        height: 24px;
+                        background: rgba(255,255,255,0.2);
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 14px;
+                        font-weight: bold;
+                    ">${icon}</div>
+                    <div style="flex: 1;">${message}</div>
+                    <div style="cursor: pointer; opacity: 0.7; font-size: 18px;" onclick="this.parentElement.parentElement.remove()">×</div>
+                </div>
+            `;
+            
+            document.body.appendChild(toast);
+            
+            // Auto remove after 3 seconds
+            setTimeout(() => {
+                if (toast && toast.parentElement) toast.remove();
+            }, 3000);
+        }
+        
+        // Add animation style
+        if (!document.querySelector('#notification-style')) {
+            const style = document.createElement('style');
+            style.id = 'notification-style';
+            style.textContent = `
+                @keyframes slideInRight {
+                    from {
+                        transform: translateX(100%);
+                        opacity: 0;
+                    }
+                    to {
+                        transform: translateX(0);
+                        opacity: 1;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        
+        
+        // ============================================
+        // AUTHENTICATION FUNCTIONS
+        // ============================================
+        
+        // Handle Login
+        async function handleLogin(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const rememberMe = document.getElementById('rememberMe').checked;
+            const loginBtn = document.getElementById('loginBtn');
+            
+            // Validation
+            if (!email || !password) {
+                showNotification('Please fill in all fields', 'error');
+                return false;
+            }
+            
+            if (!email.includes('@') || !email.includes('.')) {
+                showNotification('Please enter a valid email address', 'error');
+                return false;
+            }
+            
+            if (password.length < 6) {
+                showNotification('Password must be at least 6 characters', 'error');
+                return false;
+            }
+            
+            // Show loading state
+            loginBtn.classList.add('loading');
+            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing In...';
+            loginBtn.disabled = true;
+            
+            // Create form data
+            const formData = new FormData();
+            formData.append('email', email);
+            formData.append('password', password);
+            
+            try {
+                const response = await fetch('backend/login.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Save to localStorage
+                    localStorage.setItem('isAuthenticated', 'true');
+                    localStorage.setItem('currentUser', JSON.stringify(result.user));
+                    localStorage.setItem('userEmail', email);
+                    
+                    if (rememberMe) {
+                        localStorage.setItem('rememberedEmail', email);
+                    } else {
+                        localStorage.removeItem('rememberedEmail');
+                    }
+                    
+                    showNotification(result.message, 'success');
+                    
+                    // Check for redirect
+                    const redirect = localStorage.getItem('redirectAfterLogin') || 'index.html';
+                    localStorage.removeItem('redirectAfterLogin');
+                    
+                    setTimeout(() => {
+                        window.location.href = redirect;
+                    }, 1000);
+                } else {
+                    showNotification(result.message, 'error');
+                    loginBtn.classList.remove('loading');
+                    loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In to Your Account';
+                    loginBtn.disabled = false;
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showNotification('Connection error. Please check if the server is running.', 'error');
+                loginBtn.classList.remove('loading');
+                loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In to Your Account';
+                loginBtn.disabled = false;
+            }
+            
+            return false;
+        }
+        
+        // Toggle password visibility
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            if (!input) return;
+            
+            const icon = event.currentTarget;
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+        
+        // Forgot password
+        function forgotPassword(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            
+            if (email && email.includes('@') && email.includes('.')) {
+                showNotification(`Password reset link sent to ${email}`, 'success');
+            } else if (email) {
+                showNotification('Please enter a valid email address', 'error');
+            } else {
+                showNotification('Please enter your email address first', 'info');
+                document.getElementById('email').focus();
+            }
+        }
+        
+        // Fill demo credentials
+        function fillDemoCredentials() {
+            document.getElementById('email').value = 'demo@eventora.com';
+            document.getElementById('password').value = 'demo123';
+            showNotification('Demo credentials filled! Click Sign In to continue.', 'success');
+        }
+        
+        // Handle social login
+        function handleSocialLogin(provider) {
+            showNotification(`Connecting to ${provider}...`, 'info');
+            
+            // Simulate social login
+            setTimeout(() => {
+                const user = {
+                    id: Date.now(),
+                    name: `${provider.charAt(0).toUpperCase() + provider.slice(1)} User`,
+                    email: `user@${provider.toLowerCase()}.com`
+                };
+                
+                localStorage.setItem('isAuthenticated', 'true');
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                
+                showNotification(`Logged in with ${provider}!`, 'success');
+                
+                const redirect = localStorage.getItem('redirectAfterLogin') || 'index.html';
+                localStorage.removeItem('redirectAfterLogin');
+                
+                setTimeout(() => {
+                    window.location.href = redirect;
+                }, 1500);
+            }, 1000);
+        }
+        
+        // Check for remembered email on load
+        function loadRememberedEmail() {
+            const rememberedEmail = localStorage.getItem('rememberedEmail');
+            const rememberCheckbox = document.getElementById('rememberMe');
+            
+            if (rememberedEmail) {
+                document.getElementById('email').value = rememberedEmail;
+                if (rememberCheckbox) rememberCheckbox.checked = true;
+            }
+        }
+        
+        // Check URL for redirect parameter
+        function checkRedirect() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const redirect = urlParams.get('redirect');
+            if (redirect) {
+                localStorage.setItem('redirectAfterLogin', redirect);
+            }
+        }
+        
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', function() {
+            checkRedirect();
+            loadRememberedEmail();
+            
+            // Set focus on email input
+            document.getElementById('email').focus();
+            
+            // Add enter key support
+            const inputs = document.querySelectorAll('#email, #password');
+            inputs.forEach(input => {
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        const form = document.getElementById('loginForm');
+                        if (form && form.dispatchEvent) {
+                            form.dispatchEvent(new Event('submit'));
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+    
+    <!-- Backend API endpoint (create this file) -->
+    <!-- backend/login.php should exist and handle the login request -->
+</body>
+</html>
