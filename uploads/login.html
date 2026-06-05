@@ -1213,7 +1213,7 @@
             formData.append('password', password);
             
             try {
-                const response = await fetch('backend/login.php', {
+                const response = await fetch('../backend/login.php', {
                     method: 'POST',
                     body: formData
                 });

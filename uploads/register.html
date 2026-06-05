@@ -1186,25 +1186,9 @@
                         </p>
                     </div>
 
-                    <!-- Registration Progress -->
-                    <div class="registration-progress">
-                        <div class="progress-step active" id="step1-indicator">
-                            <span class="step-number">1</span>
-                            <span>Account</span>
-                        </div>
-                        <div class="progress-step" id="step2-indicator">
-                            <span class="step-number">2</span>
-                            <span>Profile</span>
-                        </div>
-                        <div class="progress-step" id="step3-indicator">
-                            <span class="step-number">3</span>
-                            <span>Verify</span>
-                        </div>
-                    </div>
-
-                    <!-- Step 1: Account Information -->
-                    <div id="step1" class="form-step active">
-                        <form id="step1Form" onsubmit="return nextStep(1)">
+                    <!-- Account Creation -->
+                    <div class="form-step active">
+                        <form id="registerForm" onsubmit="registerAccount(event)">
                             <div class="input-group">
                                 <i class="fas fa-user input-icon"></i>
                                 <input type="text" id="fullName" name="fullName" placeholder="Full name" required autocomplete="name">
@@ -1221,7 +1205,6 @@
                                 <i class="fas fa-eye password-toggle" onclick="togglePassword('password')"></i>
                             </div>
 
-                            <!-- Password Strength Indicator -->
                             <div class="password-strength">
                                 <div class="strength-bar">
                                     <div class="strength-fill" id="strengthBar"></div>
@@ -1236,108 +1219,9 @@
                             </div>
 
                             <button type="submit" class="btn-auth btn-next">
-                                Continue <i class="fas fa-arrow-right"></i>
-                            </button>
-                        </form>
-                    </div>
-
-                    <!-- Step 2: Profile Information -->
-                    <div id="step2" class="form-step">
-                        <form id="step2Form" onsubmit="return nextStep(2)">
-                            <div class="input-group">
-                                <i class="fas fa-phone input-icon"></i>
-                                <input type="tel" id="phone" name="phone" placeholder="Phone number" required autocomplete="tel">
-                            </div>
-
-                            <div class="input-group">
-                                <i class="fas fa-calendar input-icon"></i>
-                                <input type="date" id="dob" name="dob" placeholder="Date of birth" required>
-                            </div>
-
-                            <div class="input-group">
-                                <i class="fas fa-map-marker-alt input-icon"></i>
-                                <select id="country" name="country" required>
-                                    <option value="">Select your country</option>
-                                    <option value="LK">Sri Lanka</option>
-                                    <option value="IN">India</option>
-                                    <option value="AE">UAE</option>
-                                    <option value="US">United States</option>
-                                    <option value="UK">United Kingdom</option>
-                                    <option value="CA">Canada</option>
-                                    <option value="AU">Australia</option>
-                                    <option value="SG">Singapore</option>
-                                    <option value="MY">Malaysia</option>
-                                </select>
-                            </div>
-
-                            <div class="input-group">
-                                <i class="fas fa-bell input-icon"></i>
-                                <select id="preferences" name="preferences">
-                                    <option value="">Event preferences (optional)</option>
-                                    <option value="wedding">Wedding</option>
-                                    <option value="birthday">Birthday</option>
-                                    <option value="corporate">Corporate</option>
-                                    <option value="social">Social Events</option>
-                                </select>
-                            </div>
-
-                            <div class="button-group">
-                                <button type="button" class="btn-auth btn-prev" onclick="prevStep(2)">
-                                    <i class="fas fa-arrow-left"></i> Back
-                                </button>
-                                <button type="submit" class="btn-auth btn-next">
-                                    Continue <i class="fas fa-arrow-right"></i>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-
-                    <!-- Step 3: Verification -->
-                    <div id="step3" class="form-step">
-                        <div class="verification-box">
-                            <i class="fas fa-envelope-open-text"></i>
-                            <h3>Verify Your Email</h3>
-                            <p>We've sent a verification code to <strong id="displayEmail">user@example.com</strong></p>
-                            
-                            <div class="verification-code">
-                                <input type="text" class="code-input" maxlength="1" onkeyup="moveToNext(this, 0)">
-                                <input type="text" class="code-input" maxlength="1" onkeyup="moveToNext(this, 1)">
-                                <input type="text" class="code-input" maxlength="1" onkeyup="moveToNext(this, 2)">
-                                <input type="text" class="code-input" maxlength="1" onkeyup="moveToNext(this, 3)">
-                                <input type="text" class="code-input" maxlength="1" onkeyup="moveToNext(this, 4)">
-                                <input type="text" class="code-input" maxlength="1" onkeyup="moveToNext(this, 5)">
-                            </div>
-                            
-                            <p style="margin: 1rem 0;">
-                                <a href="#" class="resend-link" onclick="resendCode(event)">Resend code</a>
-                            </p>
-                            
-                            <p class="timer">
-                                Code expires in <span id="timer">05:00</span>
-                            </p>
-                        </div>
-
-                        <!-- Terms and Conditions -->
-                        <div class="terms-group">
-                            <div class="terms-checkbox">
-                                <input type="checkbox" id="terms1" required>
-                                <label for="terms1">I agree to the <a href="terms.html" target="_blank">Terms of Service</a> and <a href="privacy.html" target="_blank">Privacy Policy</a></label>
-                            </div>
-                            
-                            <div class="terms-checkbox">
-                                <input type="checkbox" id="terms2">
-                                <label for="terms2">I'd like to receive event planning tips and special offers (optional)</label>
-                            </div>
-                        </div>
-
-                        <div class="button-group">
-                            <button type="button" class="btn-auth btn-prev" onclick="prevStep(3)">
-                                <i class="fas fa-arrow-left"></i> Back
-                            </button>
-                            <button type="button" class="btn-auth" onclick="completeRegistration()">
                                 Create Account <i class="fas fa-check"></i>
                             </button>
-                        </div>
+                        </form>
                     </div>
 
                     <!-- Social Registration -->
@@ -1492,17 +1376,11 @@
         // REGISTRATION FUNCTIONS
         // ============================================
         
-        let currentStep = 1;
-        let timerInterval;
-        let timeLeft = 300;
-        
         // Toggle password visibility
         function togglePassword(inputId) {
             const input = document.getElementById(inputId);
             if (!input) return;
-            
             const icon = event.currentTarget;
-            
             if (input.type === 'password') {
                 input.type = 'text';
                 icon.classList.remove('fa-eye');
@@ -1519,18 +1397,14 @@
             const password = document.getElementById('password')?.value;
             const strengthBar = document.getElementById('strengthBar');
             const strengthText = document.getElementById('strengthText');
-            
             if (!password || !strengthBar) return;
-            
             let strength = 0;
             if (password.length >= 8) strength += 25;
             if (password.match(/[a-z]/)) strength += 25;
             if (password.match(/[A-Z]/)) strength += 25;
             if (password.match(/[0-9]/)) strength += 15;
             if (password.match(/[^a-zA-Z0-9]/)) strength += 10;
-            
             strengthBar.style.width = strength + '%';
-            
             if (strength < 30) {
                 strengthBar.style.backgroundColor = '#ef4444';
                 if (strengthText) strengthText.textContent = 'Weak';
@@ -1546,237 +1420,49 @@
             }
         }
         
-        // Navigate to next step
-        async function nextStep(step) {
-            if (step === 1) {
-                // Validate step 1
-                const name = document.getElementById('fullName')?.value;
-                const email = document.getElementById('email')?.value;
-                const password = document.getElementById('password')?.value;
-                const confirm = document.getElementById('confirmPassword')?.value;
-                
-                if (!name || !email || !password || !confirm) {
-                    showNotification('Please fill in all fields', 'error');
-                    return false;
-                }
-                
-                if (name.length < 2) {
-                    showNotification('Please enter your full name', 'error');
-                    return false;
-                }
-                
-                if (!email.includes('@') || !email.includes('.')) {
-                    showNotification('Please enter a valid email address', 'error');
-                    return false;
-                }
-                
-                if (password.length < 6) {
-                    showNotification('Password must be at least 6 characters', 'error');
-                    return false;
-                }
-                
-                if (password !== confirm) {
-                    showNotification('Passwords do not match', 'error');
-                    return false;
-                }
-                
-                // Check if email already exists
-                const checkBtn = event.submitter;
-                const originalText = checkBtn.innerHTML;
-                checkBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Checking...';
-                checkBtn.disabled = true;
-                
-                // Simulate email check (in production, call backend)
-                await new Promise(resolve => setTimeout(resolve, 500));
-                
-                checkBtn.innerHTML = originalText;
-                checkBtn.disabled = false;
-                
-                // Display email in verification step
-                const displayEmail = document.getElementById('displayEmail');
-                if (displayEmail) displayEmail.textContent = email;
-            }
-            
-            if (step === 2) {
-                // Validate step 2
-                const phone = document.getElementById('phone')?.value;
-                const dob = document.getElementById('dob')?.value;
-                const country = document.getElementById('country')?.value;
-                
-                if (!phone || !dob || !country) {
-                    showNotification('Please fill in all required fields', 'error');
-                    return false;
-                }
-                
-                if (phone.length < 10) {
-                    showNotification('Please enter a valid phone number', 'error');
-                    return false;
-                }
-            }
-            
-            // Update steps
-            document.getElementById(`step${step}`).classList.remove('active');
-            document.getElementById(`step${step + 1}`).classList.add('active');
-            
-            // Update progress indicators
-            const currentIndicator = document.getElementById(`step${step}-indicator`);
-            const nextIndicator = document.getElementById(`step${step + 1}-indicator`);
-            
-            if (currentIndicator) {
-                currentIndicator.classList.remove('active');
-                currentIndicator.classList.add('completed');
-            }
-            if (nextIndicator) nextIndicator.classList.add('active');
-            
-            currentStep = step + 1;
-            
-            // Start timer when reaching step 3
-            if (currentStep === 3) {
-                startTimer();
-                // Simulate sending verification code
-                const email = document.getElementById('email')?.value;
-                showNotification(`Verification code sent to ${email}`, 'success');
-            }
-            
-            return false;
-        }
-        
-        // Go to previous step
-        function prevStep(step) {
-            document.getElementById(`step${step}`).classList.remove('active');
-            document.getElementById(`step${step - 1}`).classList.add('active');
-            
-            const currentIndicator = document.getElementById(`step${step}-indicator`);
-            const prevIndicator = document.getElementById(`step${step - 1}-indicator`);
-            
-            if (currentIndicator) {
-                currentIndicator.classList.remove('active');
-            }
-            if (prevIndicator) {
-                prevIndicator.classList.remove('completed');
-                prevIndicator.classList.add('active');
-            }
-            
-            currentStep = step - 1;
-            
-            // Clear timer if leaving verification
-            if (step === 3) {
-                clearInterval(timerInterval);
-            }
-        }
-        
-        // Move to next verification code input
-        function moveToNext(input, index) {
-            if (input.value.length === 1) {
-                const nextInput = document.querySelectorAll('.code-input')[index + 1];
-                if (nextInput) nextInput.focus();
-            }
-            
-            // Auto-submit when all fields are filled
-            const allInputs = document.querySelectorAll('.code-input');
-            const allFilled = Array.from(allInputs).every(i => i.value.length === 1);
-            
-            if (allFilled && allInputs.length === 6) {
-                setTimeout(() => {
-                    completeRegistration();
-                }, 300);
-            }
-        }
-        
-        // Timer functions
-        function startTimer() {
-            timeLeft = 300;
-            updateTimerDisplay();
-            
-            timerInterval = setInterval(() => {
-                timeLeft--;
-                updateTimerDisplay();
-                
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    const timerEl = document.getElementById('timer');
-                    if (timerEl) timerEl.textContent = 'Expired';
-                    showNotification('Verification code expired. Please request a new one.', 'error');
-                }
-            }, 1000);
-        }
-        
-        function updateTimerDisplay() {
-            const timerEl = document.getElementById('timer');
-            if (!timerEl) return;
-            
-            const minutes = Math.floor(timeLeft / 60);
-            const seconds = timeLeft % 60;
-            timerEl.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-        }
-        
-        function resetTimer() {
-            clearInterval(timerInterval);
-            timeLeft = 300;
-            startTimer();
-        }
-        
-        // Resend verification code
-        function resendCode(event) {
+        async function registerAccount(event) {
             event.preventDefault();
-            showNotification('A new verification code has been sent to your email', 'success');
-            resetTimer();
-            
-            // Clear code inputs
-            document.querySelectorAll('.code-input').forEach(input => {
-                input.value = '';
-            });
-            document.querySelectorAll('.code-input')[0].focus();
-        }
-        
-        // Complete registration
-        async function completeRegistration() {
-            // Get form data
-            const name = document.getElementById('fullName')?.value;
-            const email = document.getElementById('email')?.value;
-            const phone = document.getElementById('phone')?.value;
+            const name = document.getElementById('fullName')?.value.trim();
+            const email = document.getElementById('email')?.value.trim();
             const password = document.getElementById('password')?.value;
-            
-            // Validate verification code
-            const codeInputs = document.querySelectorAll('.code-input');
-            const code = Array.from(codeInputs).map(i => i.value).join('');
-            
-            if (code.length !== 6) {
-                showNotification('Please enter the complete verification code', 'error');
-                return;
+            const confirmPassword = document.getElementById('confirmPassword')?.value;
+            if (!name || !email || !password || !confirmPassword) {
+                showNotification('Please fill in all fields', 'error');
+                return false;
             }
-            
-            // Check terms
-            const termsCheckbox = document.getElementById('terms1');
-            if (termsCheckbox && !termsCheckbox.checked) {
-                showNotification('Please agree to the Terms of Service', 'error');
-                return;
+            if (name.length < 2) {
+                showNotification('Please enter your full name', 'error');
+                return false;
             }
-            
-            // Show loading state
-            const btn = event.currentTarget;
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Account...';
-            btn.disabled = true;
-            
-            // Create form data for backend
+            if (!email.includes('@') || !email.includes('.')) {
+                showNotification('Please enter a valid email address', 'error');
+                return false;
+            }
+            if (password.length < 6) {
+                showNotification('Password must be at least 6 characters', 'error');
+                return false;
+            }
+            if (password !== confirmPassword) {
+                showNotification('Passwords do not match', 'error');
+                return false;
+            }
+            const btn = event.submitter || document.querySelector('#registerForm button[type="submit"]');
+            const originalText = btn?.innerHTML || 'Creating Account...';
+            if (btn) {
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Account...';
+                btn.disabled = true;
+            }
             const formData = new FormData();
             formData.append('name', name);
             formData.append('email', email);
-            formData.append('phone', phone || '');
             formData.append('password', password);
-            
             try {
-                // Send to backend
-                const response = await fetch('backend/register.php', {
+                const response = await fetch('../backend/register.php', {
                     method: 'POST',
                     body: formData
                 });
-                
                 const result = await response.json();
-                
                 if (result.success) {
-                    // Show success message
                     const formContainer = document.querySelector('.auth-form-container');
                     formContainer.innerHTML = `
                         <div class="success-message">
@@ -1792,63 +1478,31 @@
                             </button>
                         </div>
                     `;
-                    
                     showNotification('Account created successfully! Please login.', 'success');
                 } else {
                     showNotification(result.message, 'error');
-                    btn.innerHTML = originalText;
-                    btn.disabled = false;
+                    if (btn) {
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                    }
                 }
             } catch (error) {
                 console.error('Registration error:', error);
                 showNotification('Connection error. Please try again.', 'error');
-                btn.innerHTML = originalText;
-                btn.disabled = false;
+                if (btn) {
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                }
             }
+            return false;
         }
         
-        // Social registration
-        function socialRegister(provider) {
-            showNotification(`Connecting to ${provider}...`, 'info');
-            
-            setTimeout(() => {
-                const user = {
-                    id: Date.now(),
-                    name: `${provider.charAt(0).toUpperCase() + provider.slice(1)} User`,
-                    email: `user@${provider.toLowerCase()}.com`
-                };
-                
-                localStorage.setItem('isAuthenticated', 'true');
-                localStorage.setItem('currentUser', JSON.stringify(user));
-                
-                showNotification(`Account created with ${provider}!`, 'success');
-                
-                setTimeout(() => {
-                    window.location.href = 'index.html';
-                }, 1500);
-            }, 1000);
-        }
-        
-        // Initialize on load
         document.addEventListener('DOMContentLoaded', function() {
-            // Set minimum date for date of birth (18 years ago)
-            const today = new Date();
-            const minDate = new Date(today.setFullYear(today.getFullYear() - 18));
-            const dobInput = document.getElementById('dob');
-            if (dobInput) {
-                dobInput.max = minDate.toISOString().split('T')[0];
-            }
-            
-            // Focus first input
             document.getElementById('fullName')?.focus();
-            
-            // Add password strength listener
             const passwordInput = document.getElementById('password');
             if (passwordInput) {
                 passwordInput.addEventListener('input', checkPasswordStrength);
             }
-            
-            // Add confirm password validation
             const confirmInput = document.getElementById('confirmPassword');
             if (confirmInput) {
                 confirmInput.addEventListener('input', function() {

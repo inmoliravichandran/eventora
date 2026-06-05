@@ -238,6 +238,48 @@ async function logout() {
     }, 1000);
 }
 
+function getRedirectUrl() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('redirect') || null;
+}
+
+function redirectToLoginWithReturn(path) {
+    localStorage.setItem('redirectAfterLogin', path);
+    window.location.href = `login.html?redirect=${encodeURIComponent(path)}`;
+}
+
+function protectGuestPage() {
+    const protectedPages = ['services.html', 'cart.html', 'checkout.html'];
+    const currentPage = window.location.pathname.split('/').pop();
+
+    if (!isAuthenticated() && protectedPages.includes(currentPage)) {
+        const returnPath = currentPage + window.location.search;
+        redirectToLoginWithReturn(returnPath);
+    }
+}
+
+function enforceProtectedNavLinks() {
+    if (isAuthenticated()) {
+        return;
+    }
+
+    const guardedLinks = [
+        { selector: 'a[href="services.html"]', redirect: 'services.html' },
+        { selector: 'a[href="cart.html"]', redirect: 'cart.html' },
+        { selector: 'a[href="checkout.html"]', redirect: 'checkout.html' }
+    ];
+
+    guardedLinks.forEach(linkInfo => {
+        document.querySelectorAll(linkInfo.selector).forEach(link => {
+            link.href = `login.html?redirect=${encodeURIComponent(linkInfo.redirect)}`;
+            link.addEventListener('click', (event) => {
+                event.preventDefault();
+                redirectToLoginWithReturn(linkInfo.redirect);
+            });
+        });
+    });
+}
+
 // Check authentication and update UI
 function checkAuth() {
     const isAuth = isAuthenticated();
@@ -312,6 +354,8 @@ function showUserMenu() {
         border: 1px solid var(--border-light);
     `;
     
+    const isAdmin = user.role === 'admin';
+
     menu.innerHTML = `
         <div style="padding: 1rem; background: linear-gradient(135deg, #667eea, #764ba2); color: white;">
             <div style="font-weight: 600;">${user.name || user.email}</div>
@@ -326,6 +370,7 @@ function showUserMenu() {
         <a href="wishlist.html" style="display: flex; align-items: center; gap: 0.8rem; padding: 0.8rem 1rem; color: var(--text-dark); text-decoration: none; transition: background 0.3s;">
             <i class="fas fa-heart" style="color: var(--accent-gold); width: 20px;"></i> Wishlist
         </a>
+        ${isAdmin ? `<a href="admin-dashboard.html" style="display: flex; align-items: center; gap: 0.8rem; padding: 0.8rem 1rem; color: var(--text-dark); text-decoration: none; transition: background 0.3s;"><i class="fas fa-tachometer-alt" style="color: var(--accent-gold); width: 20px;"></i> Admin Dashboard</a>` : ''}
         <div style="border-top: 1px solid var(--border-light);"></div>
         <a href="#" onclick="logout(); return false;" style="display: flex; align-items: center; gap: 0.8rem; padding: 0.8rem 1rem; color: #ef4444; text-decoration: none; transition: background 0.3s;">
             <i class="fas fa-sign-out-alt" style="width: 20px;"></i> Logout
@@ -1274,8 +1319,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Load cart from storage
     loadCartFromStorage();
     
-    // Check authentication
+    // Check authentication and protect guest access
     checkAuth();
+    enforceProtectedNavLinks();
+    protectGuestPage();
     
     // Update cart count
     updateCartCount();
